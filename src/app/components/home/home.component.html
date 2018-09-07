@@ -1,0 +1,56 @@
+<div class="container">
+  <form #form="ngForm">
+    <div class="form-group">
+      <label for="univercityName">Enter the country of univercities</label>
+      <input
+        class="form-control"
+        type="text"
+        name="univercityName"
+        placeholder="Enter the country name"
+        id="univercityName"
+        [(ngModel)]="univercityName"
+        #uniName="ngModel"
+        [ngClass]="{'is-invalid' : uniName.errors  && form.submitted || uniName.errors  && uniName.touched}"
+        required
+      >
+      <div class="invalid-feedback" [hidden]="!uniName.errors?.required">Name required</div>
+    </div>
+    <button type="submit" class="btn btn-primary mb-2" (click)="onGetUnivercities()">Search</button>
+    <button type="submit" class="btn btn-danger mb-2 ml-2" (click)="onCancel()" *ngIf="isOpened">Clear</button>
+  </form>
+
+  <h2 *ngIf="isOpened" class="mt-5">Our result for: {{univercityName}}</h2>
+  <div class="table-responsive mt-5" *ngIf="isOpened">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Uni Name</th>
+        <th>Domains</th>
+        <th>Web pages</th>
+        <th>Code</th>
+        <th>Save</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let uni of univercities; let i = index">
+        <td>{{ i+1 }}</td>
+        <td>{{ uni.name }}</td>
+        <td>{{ uni.domains }}</td>
+        <td><a href="{{uni.web_pages}}">{{uni.web_pages}}</a></td>
+        <td>{{ uni.alpha_two_code }}</td>
+        <td><div class="input-group mb-3">
+          <div class="input-group-prepend">
+              <input
+                type="checkbox"
+                aria-label="Checkbox for following text input"
+                (change)="onChange()"
+              >
+          </div>
+        </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
